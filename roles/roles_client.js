@@ -7,21 +7,21 @@
  * client-side checks are strictly for convenience and must not be
  * trusted.
  *
- * @module UIHelpers
+ * @module HandlebarsHelpers
  */
 
 ////////////////////////////////////////////////////////////
-// UI helpers
+// Handlebars helpers
 //
-// Use a semi-private variable rather than declaring UI
+// Use a semi-private variable rather than declaring Handlebars
 // helpers directly so that we can unit test the helpers.
-// XXX For some reason, the UI helpers are not registered 
+// XXX For some reason, the Handlebars helpers are not registered 
 // before the tests run.
 //
-Roles._uiHelpers = {
+Roles._handlebarsHelpers = {
 
   /**
-   * UI helper to check if current user is in at least one
+   * Handlebars helper to check if current user is in at least one
    * of the target roles.  For use in client-side templates.
    *
    * @example
@@ -39,7 +39,7 @@ Roles._uiHelpers = {
    * @param {String} [group] Optional, name of group to check
    * @return {Boolean} true if current user is in at least one of the target roles
    * @static
-   * @for UIHelpers 
+   * @for HandlebarsHelpers 
    */
   isInRole: function (role, group) {
     var user = Meteor.user(),
@@ -70,16 +70,12 @@ Roles._uiHelpers = {
 }
 
 
-if ('undefined' !== typeof UI) {
-  _.each(Roles._uiHelpers, function (func, name) {
-    UI.registerHelper(name, func) 
-  })
-} else if ('undefined' !== typeof Handlebars) {
-  _.each(Roles._uiHelpers, function (func, name) {
+if ('undefined' !== typeof Handlebars) {
+  _.each(Roles._handlebarsHelpers, function (func, name) {
     Handlebars.registerHelper(name, func)
   })
 } else {
-  console.log && console.log('WARNING: Roles template helpers not registered. Handlebars or UI not defined')
+  console.log('WARNING: Roles Handlebars helpers not registered. Handlebars not defined')
 }
 
 }());
